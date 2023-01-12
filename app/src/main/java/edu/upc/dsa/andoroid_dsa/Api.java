@@ -36,4 +36,7 @@ public interface Api {
     @GET("shop/gadget/{idGadget}")
     Call<Gadget> getGadget(@Path("idUser") String idGadget);
 
+    @PUT("shop/user/update")
+    Call<Void> updateUser(@Body User user);
+
 }

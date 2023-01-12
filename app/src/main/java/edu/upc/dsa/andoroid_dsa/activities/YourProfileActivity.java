@@ -19,7 +19,10 @@ import edu.upc.dsa.andoroid_dsa.Api;
 import edu.upc.dsa.andoroid_dsa.R;
 import edu.upc.dsa.andoroid_dsa.RetrofitClient;
 import edu.upc.dsa.andoroid_dsa.models.Gadget;
+import edu.upc.dsa.andoroid_dsa.models.User;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class YourProfileActivity extends AppCompatActivity{
     public String idUser;
@@ -29,6 +32,7 @@ public class YourProfileActivity extends AppCompatActivity{
     public String email;
     public String password;
     public String coins;
+    EditText editorTitle,editorUsername,editorSurname,editorBirthday,editorEmail,editorPassword,editor_coins;
     public List<Gadget> gadgetsOfTheUser;
     private RecyclerView recyclerViewGadgets;
     private RecyclerViewAdapter adapterGadgets;
@@ -39,6 +43,13 @@ public class YourProfileActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.your_profile_main);
         this.getVariables();
+        editorTitle = (EditText) findViewById (R.id.title_profile);
+        editorUsername = (EditText) findViewById (R.id.user_name);
+        editorSurname = (EditText) findViewById (R.id.sur_name);
+        editorBirthday = (EditText) findViewById (R.id.birth_day);
+        editorEmail = (EditText) findViewById (R.id.e_mail);
+        editorPassword = (EditText) findViewById (R.id.pass_word);
+        editor_coins = (EditText) findViewById(R.id.co_ins);
         this.updateLabels();
         this.getUserIdFromDashboard();
         //recyclerViewGadgets=(RecyclerView)findViewById(R.id.recyclerGadgetYourProfile);
@@ -59,32 +70,25 @@ public class YourProfileActivity extends AppCompatActivity{
     public void updateLabels(){
         String updateTitle =getString(R.string.updating_title);
         updateTitle=this.username+" !";
-        EditText editorTitle = (EditText) findViewById (R.id.title_profile);
-        editorTitle.setText(updateTitle);
+        this.editorTitle.setText(updateTitle);
         String updateUsername =getString(R.string.updating_username);
         updateUsername=this.username;
-        EditText editorUsername = (EditText) findViewById (R.id.user_name);
-        editorUsername.setText(updateUsername);
+        this.editorUsername.setText(updateUsername);
         String updateSurname =getString(R.string.updating_surname);
         updateSurname=this.surname;
-        EditText editorSurname = (EditText) findViewById (R.id.sur_name);
-        editorSurname.setText(updateSurname);
+        this.editorSurname.setText(updateSurname);
         String updateBirthday =getString(R.string.updating_birthday);
         updateBirthday=this.birthday;
-        EditText editorBirthday = (EditText) findViewById (R.id.birth_day);
-        editorBirthday.setText(updateBirthday);
+        this.editorBirthday.setText(updateBirthday);
         String updateEmail =getString(R.string.updating_email);
         updateEmail=this.email;
-        EditText editorEmail = (EditText) findViewById (R.id.e_mail);
-        editorEmail.setText(updateEmail);
+        this.editorEmail.setText(updateEmail);
         String updatePassword =getString(R.string.updating_password);
         updatePassword=this.password;
-        EditText editorPassword = (EditText) findViewById (R.id.pass_word);
-        editorPassword.setText(updatePassword);
+        this.editorPassword.setText(updatePassword);
         String update_coins= getString(R.string.updating_coins);
         update_coins=this.coins;
-        EditText editor_coins = (EditText) findViewById(R.id.co_ins);
-        editor_coins.setText(update_coins);
+        this.editor_coins.setText(update_coins);
     }
 
     public void getVariables() {
@@ -100,6 +104,33 @@ public class YourProfileActivity extends AppCompatActivity{
     public void Return(View view){
         Intent intentRegister = new Intent(YourProfileActivity.this, DashBoardActivity.class);
         YourProfileActivity.this.startActivity(intentRegister);
+    }
+    public void editUser(View view){
+        String userEdit=editorUsername.getText().toString();
+        String surnameEdit=editorSurname.getText().toString();
+        String birthdayEdit=editorBirthday.getText().toString();
+        String emailEdit=editorEmail.getText().toString();
+        String passwordEdit=editorPassword.getText().toString();
+        if(this.username.equals(userEdit) && this.surname.equals(surnameEdit) && this.birthday.equals(birthdayEdit) && this.email.equals(emailEdit) && this.password.equals(passwordEdit)){
+            return;
+        }
+        else {
+            User user = new User(userEdit,surnameEdit,birthdayEdit,emailEdit,passwordEdit,Integer.valueOf(this.coins));
+            APIservice = RetrofitClient.getInstance().getMyApi();
+            Call<Void> call= APIservice.updateUser(user);
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    Toast.makeText(YourProfileActivity.this,"The user was updated correctly",Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    Toast.makeText(YourProfileActivity.this,"The user was not updated correctly",Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
     }
     public void getUserIdFromDashboard(){
         SharedPreferences sharedPreferences = getSharedPreferences("userId", Context.MODE_PRIVATE);
@@ -124,4 +155,5 @@ public class YourProfileActivity extends AppCompatActivity{
         Log.i("SAVING: ",username);
         editor.apply();
     }
+
 }
