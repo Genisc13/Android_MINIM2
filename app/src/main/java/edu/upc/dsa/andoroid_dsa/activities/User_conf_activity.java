@@ -3,6 +3,7 @@ package edu.upc.dsa.andoroid_dsa.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 
@@ -41,6 +42,12 @@ public class User_conf_activity extends AppCompatActivity {
 
                 }
             });
+            Locale localizacion = new Locale("es", "ES");
+
+            Locale.setDefault(localizacion);
+            Configuration config = new Configuration();
+            config.setLocale(localizacion);
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
             this.setLanguage("es");
         }
         else{
@@ -56,10 +63,17 @@ public class User_conf_activity extends AppCompatActivity {
 
                 }
             });
+            Locale localizacion = new Locale("en", "US");
+
+            Locale.setDefault(localizacion);
+            Configuration config = new Configuration();
+            config.setLocale(localizacion);
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
             this.setLanguage("en");
         }
 
     }
+
 
     public void setLanguage(String language) {
         this.language = language;
