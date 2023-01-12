@@ -2,10 +2,12 @@ package edu.upc.dsa.andoroid_dsa.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 
 import java.util.List;
+import java.util.Locale;
 
 import edu.upc.dsa.andoroid_dsa.Api;
 import edu.upc.dsa.andoroid_dsa.R;
