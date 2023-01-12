@@ -105,6 +105,12 @@ public class YourProfileActivity extends AppCompatActivity{
         Intent intentRegister = new Intent(YourProfileActivity.this, DashBoardActivity.class);
         YourProfileActivity.this.startActivity(intentRegister);
     }
+    public void enterConfiguration(View view){
+        Intent intentRegister = new Intent(YourProfileActivity.this, User_conf_activity.class);
+        YourProfileActivity.this.startActivity(intentRegister);
+    }
+
+    /*
     public void editUser(View view){
         String userEdit=editorUsername.getText().toString();
         String surnameEdit=editorSurname.getText().toString();
@@ -132,6 +138,7 @@ public class YourProfileActivity extends AppCompatActivity{
 
         }
     }
+    */
     public void getUserIdFromDashboard(){
         SharedPreferences sharedPreferences = getSharedPreferences("userId", Context.MODE_PRIVATE);
         this.idUser = sharedPreferences.getString("userId", null).toString();

@@ -39,4 +39,7 @@ public interface Api {
     @PUT("shop/user/update")
     Call<Void> updateUser(@Body User user);
 
+    @PUT("shop/user/change_language/{language}")
+    Call<Void> changelng(@Path("language") String language);
+
 }

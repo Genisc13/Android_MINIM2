@@ -14,7 +14,7 @@
         android:layout_marginTop="250dp"
         android:layout_centerHorizontal="true"
 
-        android:text="THE MAZER OF THE     ROOMS"
+        android:text="@string/the_mazer_of_the_rooms"
         android:fontFamily="@font/play_bold"
         android:textColor="@color/green_vibrant"
         android:textAlignment="center"
